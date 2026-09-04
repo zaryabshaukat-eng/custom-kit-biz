@@ -25,7 +25,7 @@ export function LineItemsEditor({
 
   type LinePatch = { [K in keyof LineItem]?: LineItem[K] | undefined };
   const update = (id: string, patch: LinePatch) =>
-    onChange(lines.map((l) => (l.id === id ? { ...l, ...patch } : l)));
+    onChange(lines.map((l) => (l.id === id ? ({ ...l, ...patch } as LineItem) : l)));
 
   return (
     <div className="space-y-3">

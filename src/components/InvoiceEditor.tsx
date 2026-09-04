@@ -49,12 +49,21 @@ export function InvoiceEditor({ initial, mode }: { initial: Invoice; mode: "crea
   const customers = data.contacts.filter((c) => c.type === "customer");
 
   const submit = (status: InvoiceStatus) => {
-    if (!inv.contactId) return toast.error("Select a customer first");
-    if (inv.lines.length === 0) return toast.error("Add at least one line item");
+    if (!inv.contactId) {
+      toast.error("Select a customer first");
+      return;
+    }
+    if (inv.lines.length === 0) {
+      toast.error("Add at least one line item");
+      return;
+    }
     const missing = fieldsFor("invoices").find(
       (f) => f.required && !String(inv.custom[f.key] ?? "").trim(),
     );
-    if (missing) return toast.error(`${missing.name} is required`);
+    if (missing) {
+      toast.error(`${missing.name} is required`);
+      return;
+    }
     saveInvoice({ ...inv, status });
     toast.success(
       status === "draft" ? "Invoice saved as draft" : `Invoice ${inv.number} ${status}`,
