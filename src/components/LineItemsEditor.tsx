@@ -23,7 +23,8 @@ export function LineItemsEditor({
   const { data } = useStore();
   const money = useCurrency();
 
-  const update = (id: string, patch: Partial<LineItem>) =>
+  type LinePatch = { [K in keyof LineItem]?: LineItem[K] | undefined };
+  const update = (id: string, patch: LinePatch) =>
     onChange(lines.map((l) => (l.id === id ? { ...l, ...patch } : l)));
 
   return (
