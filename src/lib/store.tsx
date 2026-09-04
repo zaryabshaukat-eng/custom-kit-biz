@@ -349,7 +349,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           const swap = idx + dir;
           if (swap < 0 || swap >= group.length) return d;
           const reordered = [...group];
-          [reordered[idx], reordered[swap]] = [reordered[swap], reordered[idx]];
+          const a = reordered[idx]!;
+          const b = reordered[swap]!;
+          reordered[idx] = b;
+          reordered[swap] = a;
           const orders = new Map(reordered.map((f, i) => [f.id, i]));
           return {
             ...d,
