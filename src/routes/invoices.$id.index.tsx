@@ -6,7 +6,7 @@ import { StatusPill } from "@/components/AppShell";
 import { useCurrency, useStore } from "@/lib/store";
 import { docTotals, lineAmounts } from "@/lib/types";
 
-export const Route = createFileRoute("/invoices/$id")({
+export const Route = createFileRoute("/invoices/$id/")({
   head: () => ({
     meta: [
       { title: "Invoice Detail — ZS Books" },
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/invoices/$id")({
 });
 
 function InvoiceDetail() {
-  const { id } = useParams({ from: "/invoices/$id" });
+  const { id } = useParams({ from: "/invoices/$id/" });
   const { data, fieldsFor } = useStore();
   const money = useCurrency();
   const inv = data.invoices.find((i) => i.id === id);
