@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as InvoicesIndexRouteImport } from './routes/invoices.index'
+import { Route as InvoicesNewRouteImport } from './routes/invoices.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const InvoicesIndexRoute = InvoicesIndexRouteImport.update({
   path: '/invoices/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvoicesNewRoute = InvoicesNewRouteImport.update({
+  id: '/invoices/new',
+  path: '/invoices/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/invoices/new': typeof InvoicesNewRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/invoices/new': typeof InvoicesNewRoute
   '/invoices': typeof InvoicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/invoices/new': typeof InvoicesNewRoute
   '/invoices/': typeof InvoicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/invoices/'
+  fullPaths: '/' | '/invoices/new' | '/invoices/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/invoices'
-  id: '__root__' | '/' | '/invoices/'
+  to: '/' | '/invoices/new' | '/invoices'
+  id: '__root__' | '/' | '/invoices/new' | '/invoices/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  InvoicesNewRoute: typeof InvoicesNewRoute
   InvoicesIndexRoute: typeof InvoicesIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InvoicesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invoices/new': {
+      id: '/invoices/new'
+      path: '/invoices/new'
+      fullPath: '/invoices/new'
+      preLoaderRoute: typeof InvoicesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  InvoicesNewRoute: InvoicesNewRoute,
   InvoicesIndexRoute: InvoicesIndexRoute,
 }
 export const routeTree = rootRouteImport
